@@ -88,6 +88,9 @@ public class ReportService {
     }
     
     private void dumpReport() {
+        if (Boolean.getBoolean("dicomcleaner.report.disabled")) {
+            return;
+        }
     	dumpReport(generateReport(false), REPORT_FILE);
     	dumpReport(generateReport(true), REPORT_FILE_FULL);
     }

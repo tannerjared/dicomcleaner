@@ -129,7 +129,7 @@ JPACKAGE_ARGS=(
   --name "$APP_NAME"
   --app-version "$APP_VERSION"
   --vendor "PixelMed Publishing"
-  --description "DICOM import, de-identification, redaction, export, and network transfer tool"
+  --description "Local DICOM input and cleaned local output tool"
   --input "$JPACKAGE_INPUT_DIR"
   --main-jar "dicomCleaner.jar"
   --main-class "org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"

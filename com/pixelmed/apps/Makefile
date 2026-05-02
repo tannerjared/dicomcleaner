@@ -27,6 +27,7 @@ CompressDicomFiles.class \
 DecompressDicomFiles.class \
 Convert8To16Bits.class \
 InsertRealWorldValueMap.class \
+LocalDicomCleaner.class \
 DeidentifyAndRedact.class \
 DeidentifyAndRedactWithOriginalFileName.class \
 FindAndCopySelectedDicomFiles.class \

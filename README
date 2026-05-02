@@ -18,6 +18,9 @@ This repository includes a jpackage-based build path for native Apple Silicon
 macOS app bundles. See packaging/macos/README.md for local build, GitHub
 Actions, signing, and distribution notes.
 
+The packaged macOS app uses a simplified local-only workflow: choose a local
+DICOM file or folder, choose a local output location, then run cleaning.
+
 20170228. DAC.g
 
 This is the PixelMed Publishing pure Java DICOM toolkit. All the
