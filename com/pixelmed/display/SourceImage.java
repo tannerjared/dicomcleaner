@@ -1951,8 +1951,12 @@ public class SourceImage {
 					try {
 						java.lang.reflect.Method getCleanerMethod = object.getClass().getMethod("cleaner",new Class[0]);
 						getCleanerMethod.setAccessible(true);
-						sun.misc.Cleaner cleaner = (sun.misc.Cleaner)getCleanerMethod.invoke(object,new Object[0]);
-						cleaner.clean();
+						Object cleaner = getCleanerMethod.invoke(object,new Object[0]);
+						if (cleaner != null) {
+							java.lang.reflect.Method cleanMethod = cleaner.getClass().getMethod("clean",new Class[0]);
+							cleanMethod.setAccessible(true);
+							cleanMethod.invoke(cleaner,new Object[0]);
+						}
 					}
 					catch(Exception e) {
 						slf4jlogger.error("",e);

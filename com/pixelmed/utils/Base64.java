@@ -2,6 +2,9 @@
 
 package com.pixelmed.utils;
 
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
+
 /**
  * <p>Various static methods helpful for converting to and from Base64 representations (e.g., for representing binary values in XML documents).</p>
  *
@@ -10,6 +13,8 @@ package com.pixelmed.utils;
 public class Base64 {
 
 	private static final String identString = "@(#) $Header: /userland/cvs/pixelmed/imgbook/com/pixelmed/utils/Base64.java,v 1.5 2018/02/09 15:35:34 dclunie Exp $";
+	private static final Encoder base64Encoder = java.util.Base64.getEncoder();
+	private static final Decoder base64Decoder = java.util.Base64.getDecoder();
 	
 	public static String getBase64(double v) {
 		long l = Double.doubleToRawLongBits(v);
@@ -22,13 +27,13 @@ public class Base64 {
 		b[5]=(byte)(l>>16);
 		b[6]=(byte)(l>>8);
 		b[7]=(byte)l;
-		String s = javax.xml.bind.DatatypeConverter.printBase64Binary(b);
-//System.err.println("Base64.getBase64(): double = "+javax.xml.bind.DatatypeConverter.printDouble(v)+" as bytes "+HexDump.dump(b)+" as Base64 "+s+" as long "+Long.toString(l,16));
+		String s = base64Encoder.encodeToString(b);
+//System.err.println("Base64.getBase64(): double = "+Double.toString(v)+" as bytes "+HexDump.dump(b)+" as Base64 "+s+" as long "+Long.toString(l,16));
 		return s;
 	}					
 
 	public static double getDouble(String s) {
-		byte[] b = javax.xml.bind.DatatypeConverter.parseBase64Binary(s);
+		byte[] b = base64Decoder.decode(s);
 		long v1 = ((long)b[0])&0xff;
 		long v2 = ((long)b[1])&0xff;
 		long v3 = ((long)b[2])&0xff;
@@ -39,7 +44,7 @@ public class Base64 {
 		long v8 = ((long)b[7])&0xff;
 		long l = (((((((((((((v1 << 8) | v2) << 8) | v3) << 8) | v4) << 8) | v5) << 8) | v6) << 8) | v7) << 8) | v8;
 		double v = Double.longBitsToDouble(l);
-//System.err.println("Base64.getDouble(): double = "+javax.xml.bind.DatatypeConverter.printDouble(v)+" from bytes "+HexDump.dump(b)+" from Base64 "+s+" from long "+Long.toString(l,16));
+//System.err.println("Base64.getDouble(): double = "+Double.toString(v)+" from bytes "+HexDump.dump(b)+" from Base64 "+s+" from long "+Long.toString(l,16));
 		return v;
 	}					
 

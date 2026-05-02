@@ -30,8 +30,6 @@ import com.pixelmed.display.SafeProgressBarUpdaterThread;
 import com.pixelmed.slf4j.Logger;
 import com.pixelmed.slf4j.LoggerFactory;
 
-import javafx.scene.layout.Border;
-
 public class GoogleDicomstoreSelector extends JPanel {
 
 	private static final Logger logger = LoggerFactory.getLogger(DicomCleaner.class);

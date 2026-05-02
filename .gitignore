@@ -3,3 +3,7 @@
 *.iml
 /demo-server/target
 /demo-server/src/main/resources/public/dicomcleaner
+/dist/macos/
+/dist/*.dmg
+/dist/*.pkg
+/dist/*.zip

@@ -1,0 +1,64 @@
+name: Apple Silicon macOS app
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/apple-silicon.yml"
+      - "build.xml"
+      - "client_secrets.json"
+      - "com/**"
+      - "apple/**"
+      - "icons/DicomCleaner.icns"
+      - "jar-in-jar-loader.zip"
+      - "jgoodies-forms-1.8.0.jar"
+      - "lib/**"
+      - "packaging/macos/**"
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/apple-silicon.yml"
+      - "build.xml"
+      - "client_secrets.json"
+      - "com/**"
+      - "apple/**"
+      - "icons/DicomCleaner.icns"
+      - "jar-in-jar-loader.zip"
+      - "jgoodies-forms-1.8.0.jar"
+      - "lib/**"
+      - "packaging/macos/**"
+
+jobs:
+  build:
+    runs-on: macos-15
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Apple Silicon JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Verify native Java runtime
+        run: |
+          test "$(uname -m)" = "arm64"
+          java -XshowSettings:properties -version 2>&1 | grep 'os.arch = aarch64'
+
+      - name: Install Ant
+        run: brew install ant
+
+      - name: Build app image
+        run: ./packaging/macos/build-apple-silicon-app.sh --app-version "${GITHUB_RUN_NUMBER}"
+
+      - name: Archive app image
+        run: ditto -c -k --sequesterRsrc --keepParent dist/macos/DicomCleaner.app dist/macos/DicomCleaner-macos-arm64.zip
+
+      - name: Upload app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DicomCleaner-macos-arm64
+          path: dist/macos/DicomCleaner-macos-arm64.zip
